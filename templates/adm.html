@@ -1,0 +1,88 @@
+{% extends 'modelo.html' %} {% block conteudo %}
+
+<nav id="menu">
+  <h2 id="titulo">Área adimistrativa - ADM</h2>
+  
+</nav>
+
+<div class="container">
+
+<div id="adm">
+  <div id="adm-users">
+    <h2>Lista de usuarios do blog</h2>
+   
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col">Email</th>
+          <th scope="col">Opções</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if not lista_usuarios %}
+
+        <tr>
+          <td colspan="3">Não há uuários cadastrados!</td>
+        </tr>
+        {% else %} {% for usuario in lista_usuarios %}
+        <tr>
+          <td>{{ usuario[1] }}</td>
+          <td>{{ usuario[2] }}</td>
+          <td class="d-flex justify-content-around align-items-center border-0">
+            <a href="/editar-user/{{ usuario[0] }}"><i class="bi bi-pen-fill"></i></a>
+            <a
+              href="/excluir-user/{{ usuario[0] }}"
+              onclick="return confirm('Tem certeza que deseja excuir este usuário?')"
+              ><i class="bi bi-trash-fill"></i></a
+            >
+          </td>
+        </tr>
+        {% endfor %} {% endif %}
+      </tbody>
+    </table>
+    <a href="/novousuario"><button class="bt_novousuario justify-content-center align-items-center">Novo usuário</button></a>
+
+    <a href="/logout"><button class="button justify-content-center align-items-center">Sair</button></a>
+
+  </div>
+  <div id="adm-posts">
+      <h2>Moderação dos Posts</h2>
+
+
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Usuário</th>
+            <th scope="col">Post</th>
+            <th scope="col">Data</th>
+            <th scope="col">Ação</th>
+          </tr>
+        </thead>
+      <tbody>
+        {% if not lista_usuarios %}
+        <tr>
+          <td colspan="4">Não há postagens no blog!</td>
+        </tr>
+        {% else %} {% for post in lista_posts %}
+        <tr>
+          <td>{{ post[4] }}</td>
+          <td class="text-truncate" style="max-width: 150px;">{{ post[2] }}</td>
+          <td>{{ post[3] }}</td>
+          <td class="d-flex justify-content-center align-items-center border-0">
+            <a
+              href="/excluir-post/{{ post[0] }}"
+              onclick="return confirm('Tem certeza que deseja excluir este post?');"
+              ><i class="bi bi-trash-fill"></i></a
+            >
+          </td>
+        </tr>
+        {% endfor %} {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
